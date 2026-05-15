@@ -1,37 +1,57 @@
-import React, { useState } from 'react'
-import ProductList from './components/ProductList'
-import DarkModeToggle from './components/DarkModeToggle'
-import Cart from './components/Cart'
+import { useState } from 'react'
+import './App.css'
+import Card from './card'
+import About from './about'
+import Cart from './cart'
 
-const App = () => {
-  // TODO: Implement state for dark mode toggle
+function App() {
 
-  // TODO: Implement state for cart management
+const [darkMode, setDarkMode] = useState(false);
 
-  // TODO: Implement state for category filtering
+const toggleDarkMode = () => {
+  setDarkMode(!darkMode);
+  // This line switches the CSS variables globally
+  document.documentElement.setAttribute('data-theme', darkMode ? 'light' : 'dark');
+};
+  
+
+
+   const [cart, setCart] = useState([]);
+
+   const addToCart = (product) => {
+     setCart([...cart, product]);
+   };
+
 
   return (
-    <div>
-      <h1>🛒 Shopping App</h1>
-      <p>
-        Welcome! Your task is to implement filtering, cart management, and dark
-        mode.
-      </p>
+    <>
+  <div className= {darkMode ? 'app dark-mode' : 'app'}>
+    <button onClick={toggleDarkMode} className="dark-mode-toggle">
+   
+      {darkMode ? 'Light Mode' : 'Dark Mode'}
+    </button>
+  </div>
+    
+    <h1>Fruit Store</h1>
+<hr />
 
-      {/* TODO: Render DarkModeToggle and implement dark mode functionality */}
-
-      {/* TODO: Implement category filter dropdown */}
-      <label>Filter by Category: </label>
-      <select>
-        <option value="all">All</option>
-        <option value="Fruits">Fruits</option>
-        <option value="Dairy">Dairy</option>
-      </select>
-
-      <ProductList />
-
-      {/* TODO: Implement and render Cart component */}
+    <div className="card-container">
+      <Card name="Apple" price={1.99} onAdd ={addToCart} image= "./apple.jpg" />
+      <Card name="Banana" price={0.99} onAdd ={addToCart} image= "./banana.jpg" />
+      <Card name="Carrots" price={1.49} onAdd ={addToCart} image= "./carrot.jpg" />
+      <Card name="Watermelon" price={2.99} onAdd ={addToCart} image= "./melon.jpg" />
+      <Card name="rosemary" price={2.99} onAdd ={addToCart} image= "./rosemary.jpg" />
+      <Card name="tomato" price={2.99} onAdd ={addToCart} image= "./tomato.jpg" />
+      <Card name="pineapple" price={2.99} onAdd ={addToCart} image= "./pineapple.jpg" />
+      <Card name="garlic" price={2.99} onAdd ={addToCart} image= "./garlic.jpg" />
     </div>
+
+<div className="cart-section">
+    <Cart cartItems={cart}/>
+    </div>
+<hr />
+    <About/>
+    </>
   )
 }
 
